@@ -24,7 +24,45 @@ A RESTful API built with Node.js and MySQL to manage books and user reviews, wit
 - Search functionality for books by title or author
 
 ---
+## Database Schema
 
+### `users`
+
+| Field      | Type           | Null | Key | Default           | Extra                 |
+|------------|----------------|------|-----|-------------------|-----------------------|
+| id         | int            | NO   | PRI | NULL              | auto_increment        |
+| username   | varchar(255)   | NO   | UNI | NULL              |                       |
+| email      | varchar(255)   | NO   | UNI | NULL              |                       |
+| password   | varchar(255)   | NO   |     | NULL              |                       |
+| created_at | timestamp      | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED     |
+
+---
+
+### `books`
+
+| Field       | Type           | Null | Key | Default           | Extra                 |
+|-------------|----------------|------|-----|-------------------|-----------------------|
+| id          | int            | NO   | PRI | NULL              | auto_increment        |
+| title       | varchar(255)   | NO   |     | NULL              |                       |
+| author      | varchar(255)   | NO   |     | NULL              |                       |
+| genre       | varchar(100)   | YES  |     | NULL              |                       |
+| description | text           | YES  |     | NULL              |                       |
+| created_at  | timestamp      | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED     |
+
+---
+
+### `reviews`
+
+| Field      | Type       | Null | Key | Default           | Extra                                         |
+|------------|------------|------|-----|-------------------|-----------------------------------------------|
+| id         | int        | NO   | PRI | NULL              | auto_increment                                |
+| book_id    | int        | NO   | MUL | NULL              |                                               |
+| user_id    | int        | NO   | MUL | NULL              |                                               |
+| rating     | int        | NO   |     | NULL              |                                               |
+| comment    | text       | YES  |     | NULL              |                                               |
+| created_at | timestamp  | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at | timestamp  | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+---
 ## 🔐 Authentication Endpoints
 
 ### Signup
@@ -42,8 +80,8 @@ curl --location 'http://localhost:3000/api/signup' \
 ```bash
 curl --location 'http://localhost:3000/api/login' \
 --header 'Content-Type: application/json' \
---data-raw '{
-  "email": "testuser@example.com",
+--data '{
+  "username": "testuser",
   "password": "password123"
 }'
 ```
@@ -65,12 +103,12 @@ curl --location 'http://localhost:3000/api/books' \
 }'
 ```
 
-### Get All Books
+### Get All Books (author is like match where as genre is exact match)
 ```bash
-curl --location 'http://localhost:3000/api/books?page=1&limit=5&author=John&genre=Fiction'
+curl --location 'http://localhost:3000/api/books?page=1&limit=10&author=Ha&genre=Classic'
 ```
 
-### Get Book by ID
+### Get Book Details by Book ID (Book Reviews from users and its details are also fetched)
 ```bash
 curl --location 'http://localhost:3000/api/books/1'
 ```
@@ -79,7 +117,7 @@ curl --location 'http://localhost:3000/api/books/1'
 
 ## 📝 Review Endpoints
 
-### Add Review
+### Add Review (User can add a review for a particular book. User can review a book only once. Here book id 1 is been reviewed by authenticated user)
 ```bash
 curl --location 'http://localhost:3000/api/books/1/reviews' \
 --header 'Authorization: Bearer <jwt_token>' \
@@ -122,8 +160,7 @@ curl --location 'http://localhost:3000/api/search?query=harry&page=1&limit=5'
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/book-review-api.git
-cd book-review-api
+git clone https://github.com/chintanshah2587/Book_Review.git
 ```
 
 2. **Install dependencies**
@@ -145,7 +182,7 @@ PORT=3000
 
 4. **Run the server**
 ```bash
-npm start
+npm run dev
 ```
 
 ---

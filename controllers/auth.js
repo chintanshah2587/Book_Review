@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Creates new user account with encrypted password storage
 async function signup({ req, res, next }) {
   const { username, email, password } = req.body;
-console.log('Signup request received:', { username, email });
   // Validate required fields are provided
   if (!username || !email || !password) {
     res.status(400);
@@ -38,7 +37,6 @@ console.log('Signup request received:', { username, email });
       'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
       [username, email, hashedPassword]
     );
-    console.log('New user created with ID:', result.insertId);
     return { message: 'User created successfully', userId: result.insertId };
   } finally {
     // Always release database connection back to pool

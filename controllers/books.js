@@ -197,7 +197,6 @@ async function searchBooks({ connection, req }) {
     `SELECT * FROM books ${whereSql} ORDER BY title LIMIT ? OFFSET ?`,
     params
   );
-
   // Get total count of matching books for pagination
   const [[{ total }]] = await connection.query(
     `SELECT COUNT(*) as total FROM books ${whereSql}`,

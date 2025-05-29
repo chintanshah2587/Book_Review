@@ -26,4 +26,7 @@ router.put('/reviews/:id', authenticate, transactionalControllerWrapper(booksCon
 // Delete review (authenticated)
 router.delete('/reviews/:id', authenticate, transactionalControllerWrapper(booksController.deleteReview));
 
+//search books (public)
+router.get('/search', transactionalControllerWrapper(booksController.searchBooks));
+
 module.exports = router;
