@@ -17,9 +17,7 @@ async function getConnection() {
   if (!pool) {
     try {
       pool = mysql.createPool(config);
-      console.log('DB connection pool created successfully');
     } catch (err) {
-      console.log('DB connection failed:', err);
       throw err;
     }
   }

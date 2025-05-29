@@ -5,7 +5,6 @@ function transactionalControllerWrapper(fn) {
     const connection = await getConnection();
     try {
       await connection.beginTransaction();
-      console.log('Transaction started');
 
       const conn = { connection, req, res, next };
       const result = await fn(conn);

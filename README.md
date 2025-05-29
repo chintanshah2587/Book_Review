@@ -80,8 +80,8 @@ curl --location 'http://localhost:3000/api/signup' \
 ```bash
 curl --location 'http://localhost:3000/api/login' \
 --header 'Content-Type: application/json' \
---data-raw '{
-  "email": "testuser@example.com",
+--data '{
+  "username": "testuser",
   "password": "password123"
 }'
 ```
@@ -103,12 +103,12 @@ curl --location 'http://localhost:3000/api/books' \
 }'
 ```
 
-### Get All Books
+### Get All Books (author is like match where as genre is exact match)
 ```bash
-curl --location 'http://localhost:3000/api/books?page=1&limit=5&author=John&genre=Fiction'
+curl --location 'http://localhost:3000/api/books?page=1&limit=10&author=Ha&genre=Classic'
 ```
 
-### Get Book by ID
+### Get Book Details by Book ID (Book Reviews from users and its details are also fetched)
 ```bash
 curl --location 'http://localhost:3000/api/books/1'
 ```
@@ -117,7 +117,7 @@ curl --location 'http://localhost:3000/api/books/1'
 
 ## 📝 Review Endpoints
 
-### Add Review
+### Add Review (User can add a review for a particular book. User can review a book only once. Here book id 1 is been reviewed by authenticated user)
 ```bash
 curl --location 'http://localhost:3000/api/books/1/reviews' \
 --header 'Authorization: Bearer <jwt_token>' \
