@@ -24,56 +24,44 @@ A RESTful API built with Node.js and MySQL to manage books and user reviews, wit
 - Search functionality for books by title or author
 
 ---
+## Database Schema
+
+### `users`
+
+| Field      | Type           | Null | Key | Default           | Extra                 |
+|------------|----------------|------|-----|-------------------|-----------------------|
+| id         | int            | NO   | PRI | NULL              | auto_increment        |
+| username   | varchar(255)   | NO   | UNI | NULL              |                       |
+| email      | varchar(255)   | NO   | UNI | NULL              |                       |
+| password   | varchar(255)   | NO   |     | NULL              |                       |
+| created_at | timestamp      | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED     |
+
 ---
-Tables 
-mysql> show tables;
-+----------------------+
-| Tables_in_bookreview |
-+----------------------+
-| books                |
-| reviews              |
-| users                |
-+----------------------+
-3 rows in set (0.05 sec)
-mysql> desc users;
-+------------+--------------+------+-----+-------------------+-------------------+
-| Field      | Type         | Null | Key | Default           | Extra             |
-+------------+--------------+------+-----+-------------------+-------------------+
-| id         | int          | NO   | PRI | NULL              | auto_increment    |
-| username   | varchar(255) | NO   | UNI | NULL              |                   |
-| email      | varchar(255) | NO   | UNI | NULL              |                   |
-| password   | varchar(255) | NO   |     | NULL              |                   |
-| created_at | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
-+------------+--------------+------+-----+-------------------+-------------------+
 
+### `books`
 
-mysql> desc books;
-+-------------+--------------+------+-----+-------------------+-------------------+
-| Field       | Type         | Null | Key | Default           | Extra             |
-+-------------+--------------+------+-----+-------------------+-------------------+
-| id          | int          | NO   | PRI | NULL              | auto_increment    |
-| title       | varchar(255) | NO   |     | NULL              |                   |
-| author      | varchar(255) | NO   |     | NULL              |                   |
-| genre       | varchar(100) | YES  |     | NULL              |                   |
-| description | text         | YES  |     | NULL              |                   |
-| created_at  | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
-+-------------+--------------+------+-----+-------------------+-------------------+
+| Field       | Type           | Null | Key | Default           | Extra                 |
+|-------------|----------------|------|-----|-------------------|-----------------------|
+| id          | int            | NO   | PRI | NULL              | auto_increment        |
+| title       | varchar(255)   | NO   |     | NULL              |                       |
+| author      | varchar(255)   | NO   |     | NULL              |                       |
+| genre       | varchar(100)   | YES  |     | NULL              |                       |
+| description | text           | YES  |     | NULL              |                       |
+| created_at  | timestamp      | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED     |
 
-5 rows in set (0.00 sec)
+---
 
-mysql> desc reviews;
-+------------+-----------+------+-----+-------------------+-----------------------------------------------+
-| Field      | Type      | Null | Key | Default           | Extra                                         |
-+------------+-----------+------+-----+-------------------+-----------------------------------------------+
-| id         | int       | NO   | PRI | NULL              | auto_increment                                |
-| book_id    | int       | NO   | MUL | NULL              |                                               |
-| user_id    | int       | NO   | MUL | NULL              |                                               |
-| rating     | int       | NO   |     | NULL              |                                               |
-| comment    | text      | YES  |     | NULL              |                                               |
-| created_at | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
-| updated_at | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
-+------------+-----------+------+-----+-------------------+-----------------------------------------------+
+### `reviews`
 
+| Field      | Type       | Null | Key | Default           | Extra                                         |
+|------------|------------|------|-----|-------------------|-----------------------------------------------|
+| id         | int        | NO   | PRI | NULL              | auto_increment                                |
+| book_id    | int        | NO   | MUL | NULL              |                                               |
+| user_id    | int        | NO   | MUL | NULL              |                                               |
+| rating     | int        | NO   |     | NULL              |                                               |
+| comment    | text       | YES  |     | NULL              |                                               |
+| created_at | timestamp  | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at | timestamp  | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
 ---
 ## 🔐 Authentication Endpoints
 
